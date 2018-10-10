@@ -554,3 +554,65 @@ void mostrarSerieConUsuario(eUsuario usuario[], eSerie serie[], eSerieYUs serieY
     }
 
 }
+
+void mostrarEmpleado(eEmpleado emp, eSector sectores[], int tamSector)
+{
+    char descripcion[20];
+
+    cargarDescripcion(sectores, tamSector, emp.idSector, descripcion);
+
+    printf("%d %s %c %.2f %s \n\n", emp.legajo, emp.nombre, emp.sexo, emp.sueldo, descripcion);
+
+}
+
+
+void mostrarEmpleados(eEmpleado nomina[], int tam, eSector sectores[], int tamSector)
+{
+    for(int i=0; i< tam; i++)
+    {
+        if( nomina[i].isEmpty == 1)
+        {
+            mostrarEmpleado(nomina[i], sectores, tamSector);
+        }
+    }
+}
+int elegirSector(eSector sectores[], int tam)
+{
+    int idSector;
+    printf("\nSectores\n\n");
+    for(int i=0; i < tam; i++)
+    {
+        printf("%d %s\n", sectores[i].id, sectores[i].descripcion);
+    }
+    printf("\nSeleccione sector: ");
+    scanf("%d", &idSector);
+
+    return idSector;
+}
+void listarEmpleadosPorSector(eEmpleado x[], int len, eSector sectores[], int lenSector)
+{
+    int idSector;
+    char descripcion[20];
+    int flag=0;
+
+    idSector = elegirSector(sectores, lenSector);
+
+    cargarDescripcion(sectores, len, idSector, descripcion);
+
+    system("cls");
+    printf("Empleados del sector %s\n\n:",descripcion);
+
+    for(int i=0; i<len; i++)
+    {
+        if(x[i].isEmpty == 1 && x[i].idSector == idSector)
+        {
+            mostrarEmpleado(x[i], sectores,lenSector);
+            flag=1;
+        }
+    }
+
+    if(flag == 0)
+    {
+        printf("No hay emplados que mostrar\n\n");
+    }
+}
